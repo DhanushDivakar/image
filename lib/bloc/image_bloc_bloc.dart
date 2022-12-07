@@ -19,14 +19,13 @@ class ImageBlocBloc extends Bloc<ImageBlocEvent, ImageBlocState> {
     on<GetImages>(_onGetImages);
   }
 
-  FutureOr<void> _onGetImages(
-      GetImages event, Emitter<ImageBlocState> emit) async {
+  FutureOr<void> _onGetImages(GetImages event, Emitter<ImageBlocState> emit) async {
     emit(state.copyWith(isLoading: true));
     try {
       final images = await apiList.getImages(page: page);
-      print(images);
-      await Future.delayed(Duration(seconds: 8));
-      emit(state.copyWith(isLoading: false, images: [...state.images, ...images], reachMax: images.isEmpty || images.length<100));
+     // print(images);
+      ///await Future.delayed(Duration(seconds: 8));
+      emit(state.copyWith(isLoading: false, images: [...state.images, ...images], reachMax: images.isEmpty || images.length < 100));
       page++;
     } catch (error) {
     emit(state.copyWith(isLoading: false));
